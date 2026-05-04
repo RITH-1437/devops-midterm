@@ -5,7 +5,7 @@ pipeline {
         JAVA_HOME = '/opt/jdk-25'
         PATH = "/opt/jdk-25/bin:/opt/maven/bin:${env.PATH}"
         PROJECT_NAME = 'devops-midterm-RITH'
-        DEPLOY_URL = 'http://152.42.188.57/Midterm-2026/nairith'
+        DEPLOY_URL = 'http://178.128.93.188/Midterm-2026/nairith'
     }
 
     stages {
