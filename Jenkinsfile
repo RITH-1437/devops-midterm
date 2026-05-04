@@ -1,8 +1,11 @@
 pipeline {
-    agent any
+    agent { label 'spring' }
 
-    tools {
-        maven 'Maven'
+    environment {
+        JAVA_HOME = '/opt/jdk-25'
+        PATH = "/opt/jdk-25/bin:/opt/maven/bin:${env.PATH}"
+        PROJECT_NAME = 'devops-midterm-RITH'
+        DEPLOY_URL = 'http://152.42.188.57/Midterm-2026/nairith'
     }
 
     stages {
@@ -14,28 +17,53 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh '''
+                    export JAVA_HOME=/opt/jdk-25
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    chmod +x mvnw
+                    ./mvnw clean package -DskipTests
+                '''
             }
         }
 
-        stage('Test') {
+        stage('Deploy with Ansible') {
             steps {
-                sh 'mvn test'
+                sh '''
+                    ansible-playbook ansible/deploy.yml \
+                        -i ansible/inventory.ini \
+                        --extra-vars "jar_path=$(pwd)/target/demo-0.0.1-SNAPSHOT.jar build_number=${BUILD_NUMBER}"
+                '''
             }
         }
     }
 
     post {
+        success {
+            mail(
+                to: 'nairithrin143@gmail.com',
+                subject: "${env.PROJECT_NAME} - Build #${env.BUILD_NUMBER} SUCCESS",
+                body: """
+Build SUCCESS!
+
+Project     : ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Build URL   : ${env.BUILD_URL}
+
+Your app has been deployed at:
+${env.DEPLOY_URL}
+                """
+            )
+        }
         failure {
             mail(
-                to: 'your@gmail.com',
-                subject: "devops-midterm-RITH - Build #${env.BUILD_NUMBER} FAILED",
+                to: 'nairithrin143@gmail.com',
+                subject: "${env.PROJECT_NAME} - Build #${env.BUILD_NUMBER} FAILED",
                 body: """
 Build FAILED!
 
-Project : ${env.JOB_NAME}
-Build Number : ${env.BUILD_NUMBER}
-Build URL : ${env.BUILD_URL}
+Project     : ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Build URL   : ${env.BUILD_URL}
 
 Please check the console output for the full error stacktrace.
                 """

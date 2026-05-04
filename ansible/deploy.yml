@@ -1,0 +1,28 @@
+---
+- name: Deploy Spring Boot app to remote server
+  hosts: deploy_server
+  become: yes
+
+  tasks:
+    - name: Ensure target directory exists
+      file:
+        path: /var/www/html/Midterm-2026/nairith
+        state: directory
+        mode: '0755'
+
+    - name: Copy JAR file to remote server
+      copy:
+        src: "{{ jar_path }}"
+        dest: /var/www/html/Midterm-2026/nairith/demo.jar
+        mode: '0755'
+
+    - name: Create index.html to indicate deployment
+      copy:
+        content: |
+          <html>
+            <body>
+              <h1>devops-midterm-RITH deployed successfully</h1>
+              <p>Build: {{ build_number }}</p>
+            </body>
+          </html>
+        dest: /var/www/html/Midterm-2026/nairith/index.html
