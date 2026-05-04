@@ -34,7 +34,12 @@
               try_files $uri $uri/ =404;
           }
 
-    - name: Reload nginx
+    - name: Ensure nginx is started and enabled
       service:
         name: nginx
-        state: reloaded
+        state: started
+        enabled: yes
+
+    - name: Reload nginx config
+      command: nginx -s reload
+      ignore_errors: yes
