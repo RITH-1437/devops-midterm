@@ -31,7 +31,7 @@ pipeline {
                 sh '''
                     ansible-playbook ansible/deploy.yml \
                         -i ansible/inventory.ini \
-                        --extra-vars "jar_path=$(pwd)/target/demo-0.0.1-SNAPSHOT.jar build_number=${BUILD_NUMBER}"
+                        --extra-vars "jar_path=$(pwd)/target/demo-0.0.1-SNAPSHOT.jar index_path=$(pwd)/src/main/resources/templates/index.html build_number=${BUILD_NUMBER}"
                 '''
             }
         }

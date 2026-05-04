@@ -16,17 +16,11 @@
         dest: /var/www/html/Midterm-2026/Rin-Nairith/demo.jar
         mode: '0755'
 
-    - name: Create index.html to indicate deployment
+    - name: Copy index.html from build workspace
       copy:
-        content: |
-          <html>
-            <body>
-              <h1>devops-midterm-RITH deployed successfully</h1>
-              <p>Build: {{ build_number }}</p>
-              <p>URL: http://178.128.93.188/Midterm-2026/Rin-Nairith</p>
-            </body>
-          </html>
+        src: "{{ index_path }}"
         dest: /var/www/html/Midterm-2026/Rin-Nairith/index.html
+        mode: '0644'
 
     - name: Add nginx location block for Rin-Nairith
       blockinfile:
