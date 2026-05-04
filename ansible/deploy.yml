@@ -6,14 +6,14 @@
   tasks:
     - name: Ensure target directory exists
       file:
-        path: /var/www/html/Midterm-2026/nairith
+        path: /var/www/Midterm-2026/nairith
         state: directory
         mode: '0755'
 
     - name: Copy JAR file to remote server
       copy:
         src: "{{ jar_path }}"
-        dest: /var/www/html/Midterm-2026/nairith/demo.jar
+        dest: /var/www/Midterm-2026/nairith/demo.jar
         mode: '0755'
 
     - name: Create index.html to indicate deployment
@@ -23,7 +23,7 @@
             <body>
               <h1>devops-midterm-RITH deployed successfully</h1>
               <p>Build: {{ build_number }}</p>
-              <p>URL: http://178.128.93.188/Midterm-2026/nairith</p>
+              <p>URL: http://152.42.188.57/Midterm-2026/nairith</p>
             </body>
           </html>
-        dest: /var/www/html/Midterm-2026/nairith/index.html
+        dest: /var/www/Midterm-2026/nairith/index.html
