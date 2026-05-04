@@ -27,3 +27,29 @@
             </body>
           </html>
         dest: /var/www/Midterm-2026/Rin-Nairith/index.html
+
+    - name: Create nginx config for Rin-Nairith
+      copy:
+        content: |
+          server {
+              listen 80;
+              server_name 178.128.93.188;
+
+              location /Midterm-2026/Rin-Nairith {
+                  alias /var/www/Midterm-2026/Rin-Nairith;
+                  index index.html;
+                  try_files $uri $uri/ =404;
+              }
+          }
+        dest: /etc/nginx/sites-available/Rin-Nairith
+
+    - name: Enable nginx site
+      file:
+        src: /etc/nginx/sites-available/Rin-Nairith
+        dest: /etc/nginx/sites-enabled/Rin-Nairith
+        state: link
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
