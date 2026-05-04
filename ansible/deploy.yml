@@ -27,3 +27,20 @@
             </body>
           </html>
         dest: /var/www/html/Midterm-2026/Rin-Nairith/index.html
+
+    - name: Add nginx location block for Rin-Nairith
+      blockinfile:
+        path: /etc/nginx/sites-enabled/default
+        marker: "# {mark} ANSIBLE MANAGED BLOCK Rin-Nairith"
+        insertbefore: "^}"
+        block: |
+          location /Midterm-2026/Rin-Nairith {
+              alias /var/www/html/Midterm-2026/Rin-Nairith/;
+              index index.html;
+              try_files $uri $uri/ =404;
+          }
+
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
