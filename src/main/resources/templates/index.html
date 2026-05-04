@@ -4,128 +4,316 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Product Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* --- 3 colors: #f5f5f5 (bg), #1a2b4a (primary dark blue), #ffffff (white) --- */
+        :root {
+            --navy:   #0f172a;
+            --blue:   #3b82f6;
+            --light:  #f8fafc;
+            --white:  #ffffff;
+            --border: #e2e8f0;
+            --muted:  #94a3b8;
+            --hover:  #f1f5f9;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+            --radius: 12px;
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            color: #1a2b4a;
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--navy);
             min-height: 100vh;
         }
 
-        header {
-            background: #1a2b4a;
-            color: #ffffff;
-            padding: 1rem 2rem;
+        /* ── NAV ── */
+        nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
         }
-        header h1 { font-size: 1.4rem; font-weight: 600; }
-
-        main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-
-        /* Form card */
-        .card {
-            background: #ffffff;
-            border: 1px solid #d0d7e3;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--navy);
         }
-        .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #1a2b4a; }
-
-        .form-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .form-row input {
-            flex: 1;
-            min-width: 140px;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #c0c8d8;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            background: #f5f5f5;
-            color: #1a2b4a;
-            outline: none;
+        .nav-brand .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--blue);
         }
-        .form-row input:focus { border-color: #1a2b4a; background: #ffffff; }
-
-        .btn {
-            padding: 0.5rem 1.2rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
+        .nav-count {
+            font-size: 0.8rem;
+            color: var(--muted);
             font-weight: 500;
         }
-        .btn-primary { background: #1a2b4a; color: #ffffff; }
-        .btn-primary:hover { opacity: 0.85; }
-        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
-        .btn-edit { background: #1a2b4a; color: #ffffff; }
-        .btn-delete { background: #f5f5f5; color: #1a2b4a; border: 1px solid #1a2b4a; }
-        .btn-delete:hover { background: #1a2b4a; color: #ffffff; }
-        .btn-cancel { background: #f5f5f5; color: #1a2b4a; border: 1px solid #c0c8d8; }
 
-        /* Table */
-        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        thead tr { background: #1a2b4a; color: #ffffff; }
-        thead th { padding: 0.65rem 1rem; text-align: left; font-weight: 500; }
-        tbody tr { border-bottom: 1px solid #e0e6f0; background: #ffffff; }
-        tbody tr:hover { background: #f0f3f8; }
-        tbody td { padding: 0.65rem 1rem; }
-        .actions { display: flex; gap: 0.4rem; }
+        /* ── LAYOUT ── */
+        .page { max-width: 1000px; margin: 2.5rem auto; padding: 0 1.5rem; }
 
-        /* Empty state */
-        .empty { text-align: center; padding: 2rem; color: #7a8ba8; font-size: 0.9rem; }
+        /* ── HERO ── */
+        .hero {
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .hero p {
+            margin-top: 0.35rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
 
-        /* Toast */
+        /* ── CARD ── */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-header h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .card-body { padding: 1.5rem; }
+
+        /* ── FORM ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr 0.7fr auto auto;
+            gap: 0.75rem;
+            align-items: end;
+        }
+        @media (max-width: 700px) {
+            .form-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .field { display: flex; flex-direction: column; gap: 0.35rem; }
+        .field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .field input {
+            padding: 0.6rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            background: var(--light);
+            transition: border-color .15s, box-shadow .15s;
+            outline: none;
+            width: 100%;
+        }
+        .field input:focus {
+            border-color: var(--blue);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+        }
+        .field input.error { border-color: #ef4444; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.6rem 1.1rem;
+            border: none; border-radius: 8px;
+            font-size: 0.875rem; font-weight: 600; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: all .15s; white-space: nowrap;
+        }
+        .btn-primary { background: var(--blue); color: var(--white); }
+        .btn-primary:hover { background: #2563eb; box-shadow: 0 4px 12px rgba(59,130,246,.35); }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--hover); color: var(--navy); }
+        .btn-icon {
+            padding: 0.4rem 0.7rem; font-size: 0.8rem; border-radius: 6px;
+        }
+        .btn-edit-sm  { background: var(--blue); color: var(--white); }
+        .btn-edit-sm:hover { background: #2563eb; }
+        .btn-del-sm   { background: var(--hover); color: #ef4444; border: 1px solid #fecaca; }
+        .btn-del-sm:hover { background: #fef2f2; }
+
+        /* ── TABLE ── */
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        thead th {
+            padding: 0.75rem 1.25rem;
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            background: var(--light);
+        }
+        tbody td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--navy);
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr { transition: background .1s; }
+        tbody tr:hover td { background: var(--hover); }
+
+        .td-id { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
+        .td-name { font-weight: 600; }
+        .td-desc { color: #475569; max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .td-price {
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        .price-badge {
+            display: inline-block;
+            background: #eff6ff;
+            color: var(--blue);
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .actions-cell { display: flex; gap: 0.4rem; }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 3.5rem 1rem;
+        }
+        .empty-state .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            opacity: .4;
+        }
+        .empty-state p { color: var(--muted); font-size: 0.9rem; }
+
+        /* ── TOAST ── */
         #toast {
-            position: fixed; bottom: 1.5rem; right: 1.5rem;
-            background: #1a2b4a; color: #ffffff;
-            padding: 0.65rem 1.2rem; border-radius: 4px;
-            font-size: 0.85rem; display: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: fixed; bottom: 1.75rem; right: 1.75rem;
+            background: var(--navy); color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem; font-weight: 500;
+            display: none; opacity: 0;
+            box-shadow: 0 8px 24px rgba(0,0,0,.2);
+            transition: opacity .25s;
+            z-index: 999;
+        }
+        #toast.show { display: block; opacity: 1; }
+        #toast.success::before { content: '✓  '; color: #4ade80; }
+        #toast.error::before   { content: '✕  '; color: #f87171; }
+
+        /* ── EDIT MODE HIGHLIGHT ── */
+        .card.editing { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
+        .edit-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--blue);
+            background: #eff6ff;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Product Manager &mdash; CRUD</h1>
-</header>
+<!-- NAV -->
+<nav>
+    <div class="nav-brand">
+        <div class="dot"></div>
+        Product Manager
+    </div>
+    <span class="nav-count" id="nav-count">— items</span>
+</nav>
 
-<main>
+<div class="page">
 
-    <!-- Add / Edit Form -->
-    <div class="card">
-        <h2 id="form-title">Add Product</h2>
-        <div class="form-row">
-            <input id="f-name"  type="text"   placeholder="Name"        />
-            <input id="f-desc"  type="text"   placeholder="Description" />
-            <input id="f-price" type="number" placeholder="Price" step="0.01" min="0"/>
-            <button class="btn btn-primary" onclick="submitForm()">Save</button>
-            <button class="btn btn-cancel"  onclick="cancelEdit()" id="btn-cancel" style="display:none">Cancel</button>
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Products</h1>
+        <p>Manage your product catalog — add, edit, and remove products.</p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="card" id="form-card" style="margin-bottom:1.5rem;">
+        <div class="card-header">
+            <h2 id="form-title">Add New Product</h2>
+            <span class="edit-label" id="edit-badge" style="display:none;">Editing</span>
+        </div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="field">
+                    <label>Name</label>
+                    <input id="f-name" type="text" placeholder="e.g. Laptop Pro"/>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input id="f-desc" type="text" placeholder="Short description"/>
+                </div>
+                <div class="field">
+                    <label>Price ($)</label>
+                    <input id="f-price" type="number" placeholder="0.00" step="0.01" min="0"/>
+                </div>
+                <div class="field">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary" onclick="submitForm()">
+                        <span id="btn-save-text">＋ Add</span>
+                    </button>
+                </div>
+                <div class="field" id="cancel-wrap" style="display:none;">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Product Table -->
+    <!-- TABLE CARD -->
     <div class="card">
-        <h2>Products</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price ($)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="product-body">
-                <tr><td colspan="5" class="empty">Loading...</td></tr>
-            </tbody>
-        </table>
+        <div class="card-header">
+            <h2>All Products</h2>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-body">
+                    <tr><td colspan="5">
+                        <div class="empty-state">
+                            <div class="icon">⟳</div>
+                            <p>Loading products...</p>
+                        </div>
+                    </td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-</main>
+</div><!-- /page -->
 
 <div id="toast"></div>
 
@@ -134,51 +322,88 @@
     let editingId = null;
 
     async function loadProducts() {
-        const res = await fetch(API);
-        const data = await res.json();
-        const tbody = document.getElementById('product-body');
-        if (!data.length) {
-            tbody.innerHTML = '<tr><td colspan="5" class="empty">No products yet. Add one above.</td></tr>';
-            return;
+        try {
+            const res  = await fetch(API);
+            const data = await res.json();
+            const tbody = document.getElementById('product-body');
+            document.getElementById('nav-count').textContent =
+                data.length === 0 ? 'No items' : `${data.length} item${data.length > 1 ? 's' : ''}`;
+
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="5">
+                    <div class="empty-state">
+                        <div class="icon">📦</div>
+                        <p>No products yet — add your first one above.</p>
+                    </div></td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = data.map(p => `
+                <tr>
+                    <td class="td-id">#${p.id}</td>
+                    <td class="td-name">${esc(p.name)}</td>
+                    <td class="td-desc" title="${esc(p.description)}">${esc(p.description) || '<span style="color:#cbd5e1">—</span>'}</td>
+                    <td><span class="price-badge">$${p.price != null ? p.price.toFixed(2) : '0.00'}</span></td>
+                    <td>
+                        <div class="actions-cell">
+                            <button class="btn btn-icon btn-edit-sm"
+                                onclick="startEdit(${p.id}, ${JSON.stringify(p.name)}, ${JSON.stringify(p.description || '')}, ${p.price ?? 0})">
+                                Edit
+                            </button>
+                            <button class="btn btn-icon btn-del-sm"
+                                onclick="deleteProduct(${p.id})">
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>`).join('');
+        } catch(e) {
+            console.error(e);
+            toast('Failed to load products', 'error');
         }
-        tbody.innerHTML = data.map(p => `
-            <tr>
-                <td>${p.id}</td>
-                <td>${esc(p.name)}</td>
-                <td>${esc(p.description)}</td>
-                <td>${p.price != null ? p.price.toFixed(2) : '-'}</td>
-                <td class="actions">
-                    <button class="btn btn-sm btn-edit"   onclick="startEdit(${p.id}, '${esc(p.name)}', '${esc(p.description)}', ${p.price})">Edit</button>
-                    <button class="btn btn-sm btn-delete" onclick="deleteProduct(${p.id})">Delete</button>
-                </td>
-            </tr>`).join('');
     }
 
     async function submitForm() {
-        const name  = document.getElementById('f-name').value.trim();
-        const desc  = document.getElementById('f-desc').value.trim();
-        const price = parseFloat(document.getElementById('f-price').value);
+        const nameEl  = document.getElementById('f-name');
+        const name    = nameEl.value.trim();
+        const desc    = document.getElementById('f-desc').value.trim();
+        const priceRaw= document.getElementById('f-price').value;
+        const price   = priceRaw !== '' ? parseFloat(priceRaw) : null;
 
-        if (!name) { toast('Name is required'); return; }
+        if (!name) {
+            nameEl.classList.add('error');
+            nameEl.focus();
+            toast('Product name is required', 'error');
+            return;
+        }
+        nameEl.classList.remove('error');
 
-        const body = JSON.stringify({ name, description: desc, price });
-        const url  = editingId ? `${API}/${editingId}` : API;
+        const body   = JSON.stringify({ name, description: desc, price });
+        const url    = editingId ? `${API}/${editingId}` : API;
         const method = editingId ? 'PUT' : 'POST';
 
-        const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body });
-        if (res.ok) {
-            toast(editingId ? 'Product updated' : 'Product added');
-            cancelEdit();
-            loadProducts();
-        } else {
-            toast('Error saving product');
+        try {
+            const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body });
+            if (res.ok) {
+                toast(editingId ? 'Product updated successfully' : 'Product added successfully', 'success');
+                cancelEdit();
+                loadProducts();
+            } else {
+                toast('Error saving product', 'error');
+            }
+        } catch(e) {
+            toast('Network error', 'error');
         }
     }
 
     async function deleteProduct(id) {
-        if (!confirm('Delete this product?')) return;
-        const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
-        if (res.ok) { toast('Product deleted'); loadProducts(); }
+        if (!confirm(`Delete product #${id}?`)) return;
+        try {
+            const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+            if (res.ok) { toast('Product deleted', 'success'); loadProducts(); }
+        } catch(e) {
+            toast('Network error', 'error');
+        }
     }
 
     function startEdit(id, name, description, price) {
@@ -187,8 +412,12 @@
         document.getElementById('f-desc').value  = description;
         document.getElementById('f-price').value = price;
         document.getElementById('form-title').textContent = `Edit Product #${id}`;
-        document.getElementById('btn-cancel').style.display = '';
+        document.getElementById('btn-save-text').textContent = '✓ Save Changes';
+        document.getElementById('cancel-wrap').style.display = '';
+        document.getElementById('edit-badge').style.display  = '';
+        document.getElementById('form-card').classList.add('editing');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('f-name').focus();
     }
 
     function cancelEdit() {
@@ -196,20 +425,30 @@
         document.getElementById('f-name').value  = '';
         document.getElementById('f-desc').value  = '';
         document.getElementById('f-price').value = '';
-        document.getElementById('form-title').textContent = 'Add Product';
-        document.getElementById('btn-cancel').style.display = 'none';
+        document.getElementById('form-title').textContent    = 'Add New Product';
+        document.getElementById('btn-save-text').textContent = '＋ Add';
+        document.getElementById('cancel-wrap').style.display = 'none';
+        document.getElementById('edit-badge').style.display  = 'none';
+        document.getElementById('form-card').classList.remove('editing');
+        document.getElementById('f-name').classList.remove('error');
     }
 
     function esc(str) {
         if (!str) return '';
-        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        return String(str)
+            .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
 
-    function toast(msg) {
+    let toastTimer;
+    function toast(msg, type = 'success') {
         const t = document.getElementById('toast');
+        t.className = '';
         t.textContent = msg;
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2500);
+        void t.offsetWidth; // reflow
+        t.classList.add('show', type);
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
     }
 
     loadProducts();
