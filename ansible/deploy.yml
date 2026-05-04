@@ -30,7 +30,7 @@
 
     - name: Add nginx location block for Rin-Nairith
       blockinfile:
-        path: /etc/nginx/sites-enabled/default
+        path: /etc/nginx/sites-enabled/et_anchhy
         marker: "# {mark} ANSIBLE MANAGED BLOCK Rin-Nairith"
         insertbefore: "^}"
         block: |
