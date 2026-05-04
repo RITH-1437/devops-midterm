@@ -3,83 +3,212 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Product Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <title>Rin Nairith — Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
             --navy:   #0f172a;
             --blue:   #3b82f6;
+            --blue2:  #1d4ed8;
             --light:  #f8fafc;
             --white:  #ffffff;
             --border: #e2e8f0;
-            --muted:  #94a3b8;
+            --muted:  #64748b;
             --hover:  #f1f5f9;
-            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-            --radius: 12px;
+            --radius: 14px;
+            --shadow: 0 2px 8px rgba(0,0,0,.07), 0 8px 24px rgba(0,0,0,.05);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--light);
             color: var(--navy);
-            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        /* ── NAV ── */
+        /* ── NAVBAR ── */
         nav {
-            background: var(--white);
+            position: sticky; top: 0; z-index: 200;
+            background: rgba(255,255,255,.85);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(8px);
+            height: 58px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 2.5rem;
         }
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--navy);
+        .nav-logo {
+            font-weight: 800; font-size: 1rem; color: var(--navy);
+            display: flex; align-items: center; gap: 0.5rem;
         }
-        .nav-brand .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--blue);
+        .nav-logo span { color: var(--blue); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: var(--muted);
+            text-decoration: none; transition: color .15s;
         }
-        .nav-count {
-            font-size: 0.8rem;
-            color: var(--muted);
-            font-weight: 500;
-        }
+        .nav-links a:hover { color: var(--navy); }
 
-        /* ── LAYOUT ── */
-        .page { max-width: 1000px; margin: 2.5rem auto; padding: 0 1.5rem; }
+        /* ── SECTIONS ── */
+        section { padding: 5rem 1.5rem; }
+        .container { max-width: 960px; margin: 0 auto; }
 
         /* ── HERO ── */
-        .hero {
-            margin-bottom: 2rem;
+        #hero {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 5rem 1.5rem 4.5rem;
         }
-        .hero h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
+        .hero-inner {
+            max-width: 960px; margin: 0 auto;
+            display: flex; align-items: center; gap: 3.5rem;
+        }
+        .avatar {
+            flex-shrink: 0;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; font-weight: 800; color: var(--white);
+            box-shadow: 0 8px 32px rgba(59,130,246,.3);
+            user-select: none;
+        }
+        .hero-text h1 {
+            font-size: 2.6rem; font-weight: 800; line-height: 1.15;
             color: var(--navy);
-            line-height: 1.2;
         }
-        .hero p {
-            margin-top: 0.35rem;
-            color: var(--muted);
-            font-size: 0.9rem;
+        .hero-text h1 span { color: var(--blue); }
+        .role-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            margin-top: 0.65rem;
+            background: #eff6ff; color: var(--blue);
+            padding: 0.3rem 0.9rem; border-radius: 999px;
+            font-size: 0.82rem; font-weight: 600;
+        }
+        .role-badge::before { content: '⚡'; font-size: 0.75rem; }
+        .hero-bio {
+            margin-top: 1rem;
+            color: var(--muted); font-size: 0.95rem; max-width: 520px;
+            line-height: 1.7;
+        }
+        .hero-actions {
+            margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.65rem 1.3rem; border-radius: 9px; border: none;
+            font-size: 0.875rem; font-weight: 600; font-family: 'Inter', sans-serif;
+            cursor: pointer; text-decoration: none; transition: all .15s;
+        }
+        .btn-primary { background: var(--blue); color: var(--white); }
+        .btn-primary:hover { background: var(--blue2); box-shadow: 0 4px 14px rgba(59,130,246,.4); }
+        .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+        .btn-outline:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
+
+        /* ── SECTION HEADING ── */
+        .section-label {
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .1em; color: var(--blue); margin-bottom: 0.4rem;
+        }
+        .section-heading {
+            font-size: 1.7rem; font-weight: 800; color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .section-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
+
+        /* ── SKILLS ── */
+        #skills { background: var(--light); }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .skill-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.4rem;
+            box-shadow: var(--shadow);
+            transition: transform .15s, box-shadow .15s;
+        }
+        .skill-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
+        .skill-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+        .skill-name { font-weight: 700; font-size: 0.9rem; color: var(--navy); }
+        .skill-tags { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+        .tag {
+            font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.55rem;
+            border-radius: 999px; background: #eff6ff; color: var(--blue);
+            border: 1px solid #bfdbfe;
         }
 
-        /* ── CARD ── */
+        /* ── PROJECTS ── */
+        #projects { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+        .project-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--light);
+            box-shadow: var(--shadow);
+            transition: transform .15s, box-shadow .15s;
+        }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+        .project-thumb {
+            height: 120px;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem;
+        }
+        .project-body { padding: 1.25rem; }
+        .project-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+        .project-desc { margin-top: 0.4rem; font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+        .project-footer {
+            padding: 0.9rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 0.5rem; flex-wrap: wrap;
+        }
+        .project-tag {
+            font-size: 0.72rem; font-weight: 600;
+            padding: 0.2rem 0.6rem; border-radius: 999px;
+            background: var(--navy); color: var(--white);
+        }
+
+        /* ── CONTACT ── */
+        #contact { background: var(--light); }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1rem;
+        }
+        .contact-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.5rem;
+            display: flex; align-items: center; gap: 1rem;
+            box-shadow: var(--shadow);
+            text-decoration: none; color: var(--navy);
+            transition: transform .15s, border-color .15s;
+        }
+        .contact-card:hover { transform: translateY(-3px); border-color: var(--blue); }
+        .contact-icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            background: #eff6ff; color: var(--blue);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .contact-info .c-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+        .contact-info .c-value { font-size: 0.875rem; font-weight: 600; color: var(--navy); margin-top: 0.1rem; }
+
+        /* ── PRODUCT SECTION ── */
+        #products-section { background: var(--white); border-top: 1px solid var(--border); }
         .card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -87,148 +216,93 @@
             box-shadow: var(--shadow);
             overflow: hidden;
         }
+        .card.editing { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
         .card-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
         }
-        .card-header h2 {
-            font-size: 0.95rem;
-            font-weight: 600;
+        .card-header h3 { font-size: 0.95rem; font-weight: 700; }
+        .card-body { padding: 1.4rem 1.5rem; }
+        .edit-badge {
+            font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.65rem;
+            border-radius: 999px; background: #eff6ff; color: var(--blue);
         }
-        .card-body { padding: 1.5rem; }
-
-        /* ── FORM ── */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1.6fr 0.7fr auto auto;
-            gap: 0.75rem;
-            align-items: end;
+            gap: 0.75rem; align-items: end;
         }
-        @media (max-width: 700px) {
-            .form-grid { grid-template-columns: 1fr 1fr; }
-        }
-        .field { display: flex; flex-direction: column; gap: 0.35rem; }
-        .field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        @media(max-width:700px){ .form-grid{ grid-template-columns:1fr 1fr; } }
+        .field { display: flex; flex-direction: column; gap: 0.3rem; }
+        .field label { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
         .field input {
-            padding: 0.6rem 0.85rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
-            color: var(--navy);
-            background: var(--light);
+            padding: 0.6rem 0.85rem; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 0.875rem; font-family: 'Inter', sans-serif;
+            color: var(--navy); background: var(--light); outline: none;
             transition: border-color .15s, box-shadow .15s;
-            outline: none;
-            width: 100%;
         }
-        .field input:focus {
-            border-color: var(--blue);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(59,130,246,.12);
-        }
+        .field input:focus { border-color: var(--blue); background: var(--white); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
         .field input.error { border-color: #ef4444; }
+        .btn-save { background: var(--blue); color: var(--white); }
+        .btn-save:hover { background: var(--blue2); }
+        .btn-ghost-sm { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+        .btn-ghost-sm:hover { color: var(--navy); border-color: var(--navy); }
+        .btn-edit-sm  { background: var(--blue); color: var(--white); font-size: 0.78rem; padding: 0.35rem 0.7rem; border-radius: 7px; }
+        .btn-edit-sm:hover { background: var(--blue2); }
+        .btn-del-sm   { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; font-size: 0.78rem; padding: 0.35rem 0.7rem; border-radius: 7px; }
+        .btn-del-sm:hover { background: #fee2e2; }
 
-        /* ── BUTTONS ── */
-        .btn {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.6rem 1.1rem;
-            border: none; border-radius: 8px;
-            font-size: 0.875rem; font-weight: 600; font-family: 'Inter', sans-serif;
-            cursor: pointer; transition: all .15s; white-space: nowrap;
-        }
-        .btn-primary { background: var(--blue); color: var(--white); }
-        .btn-primary:hover { background: #2563eb; box-shadow: 0 4px 12px rgba(59,130,246,.35); }
-        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-        .btn-ghost:hover { background: var(--hover); color: var(--navy); }
-        .btn-icon {
-            padding: 0.4rem 0.7rem; font-size: 0.8rem; border-radius: 6px;
-        }
-        .btn-edit-sm  { background: var(--blue); color: var(--white); }
-        .btn-edit-sm:hover { background: #2563eb; }
-        .btn-del-sm   { background: var(--hover); color: #ef4444; border: 1px solid #fecaca; }
-        .btn-del-sm:hover { background: #fef2f2; }
-
-        /* ── TABLE ── */
         .table-wrap { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
         thead th {
-            padding: 0.75rem 1.25rem;
-            text-align: left;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--muted);
-            border-bottom: 1px solid var(--border);
-            background: var(--light);
+            padding: 0.7rem 1.25rem; text-align: left;
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .06em; color: var(--muted);
+            border-bottom: 1px solid var(--border); background: var(--light);
         }
-        tbody td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border);
-            color: var(--navy);
-        }
+        tbody td { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); }
         tbody tr:last-child td { border-bottom: none; }
-        tbody tr { transition: background .1s; }
         tbody tr:hover td { background: var(--hover); }
-
-        .td-id { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
-        .td-name { font-weight: 600; }
-        .td-desc { color: #475569; max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .td-price {
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-        }
+        .td-id { color: var(--muted); font-size: 0.8rem; font-weight: 600; }
+        .td-name { font-weight: 700; }
+        .td-desc { color: #475569; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .price-badge {
-            display: inline-block;
-            background: #eff6ff;
-            color: var(--blue);
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
-            font-size: 0.82rem;
-            font-weight: 700;
+            display: inline-block; background: #eff6ff; color: var(--blue);
+            padding: 0.2rem 0.65rem; border-radius: 999px;
+            font-size: 0.8rem; font-weight: 700;
         }
         .actions-cell { display: flex; gap: 0.4rem; }
+        .empty-state { text-align: center; padding: 3rem 1rem; }
+        .empty-state .eicon { font-size: 2rem; opacity: .3; margin-bottom: 0.6rem; }
+        .empty-state p { color: var(--muted); font-size: 0.875rem; }
 
-        /* ── EMPTY STATE ── */
-        .empty-state {
-            text-align: center;
-            padding: 3.5rem 1rem;
+        /* ── FOOTER ── */
+        footer {
+            background: var(--navy); color: #94a3b8;
+            text-align: center; padding: 2rem 1rem;
+            font-size: 0.82rem;
         }
-        .empty-state .icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-            opacity: .4;
-        }
-        .empty-state p { color: var(--muted); font-size: 0.9rem; }
+        footer strong { color: var(--white); }
 
         /* ── TOAST ── */
         #toast {
             position: fixed; bottom: 1.75rem; right: 1.75rem;
             background: var(--navy); color: var(--white);
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            font-size: 0.85rem; font-weight: 500;
+            padding: 0.75rem 1.25rem; border-radius: 10px;
+            font-size: 0.84rem; font-weight: 500;
             display: none; opacity: 0;
             box-shadow: 0 8px 24px rgba(0,0,0,.2);
-            transition: opacity .25s;
-            z-index: 999;
+            transition: opacity .25s; z-index: 999;
         }
         #toast.show { display: block; opacity: 1; }
         #toast.success::before { content: '✓  '; color: #4ade80; }
         #toast.error::before   { content: '✕  '; color: #f87171; }
 
-        /* ── EDIT MODE HIGHLIGHT ── */
-        .card.editing { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
-        .edit-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--blue);
-            background: #eff6ff;
-            padding: 0.2rem 0.65rem;
-            border-radius: 999px;
+        @media(max-width:640px){
+            .hero-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-actions { justify-content: center; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -236,84 +310,273 @@
 
 <!-- NAV -->
 <nav>
-    <div class="nav-brand">
-        <div class="dot"></div>
-        Product Manager
+    <div class="nav-logo">Rin<span>.</span>Nairith</div>
+    <div class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#products-section">Demo</a>
+        <a href="#contact">Contact</a>
     </div>
-    <span class="nav-count" id="nav-count">— items</span>
 </nav>
 
-<div class="page">
-
-    <!-- HERO -->
-    <div class="hero">
-        <h1>Products</h1>
-        <p>Manage your product catalog — add, edit, and remove products.</p>
-    </div>
-
-    <!-- FORM CARD -->
-    <div class="card" id="form-card" style="margin-bottom:1.5rem;">
-        <div class="card-header">
-            <h2 id="form-title">Add New Product</h2>
-            <span class="edit-label" id="edit-badge" style="display:none;">Editing</span>
+<!-- HERO -->
+<section id="hero">
+    <div class="hero-inner">
+        <div class="avatar">RN</div>
+        <div class="hero-text">
+            <h1>Hi, I'm <span>Rin Nairith</span></h1>
+            <div class="role-badge">Full Stack Developer</div>
+            <p class="hero-bio">
+                Passionate full stack developer with hands-on experience building
+                robust web applications, RESTful APIs, and deploying production-grade
+                systems with modern DevOps practices. I turn ideas into reliable,
+                scalable software.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="form-grid">
-                <div class="field">
-                    <label>Name</label>
-                    <input id="f-name" type="text" placeholder="e.g. Laptop Pro"/>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="container">
+        <div class="section-label">What I work with</div>
+        <h2 class="section-heading">Skills &amp; Technologies</h2>
+        <p class="section-sub">A full stack toolkit from frontend to infrastructure.</p>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">☕</div>
+                <div class="skill-name">Backend</div>
+                <div class="skill-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">Spring Boot</span>
+                    <span class="tag">REST API</span>
+                    <span class="tag">JPA</span>
                 </div>
-                <div class="field">
-                    <label>Description</label>
-                    <input id="f-desc" type="text" placeholder="Short description"/>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🌐</div>
+                <div class="skill-name">Frontend</div>
+                <div class="skill-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
                 </div>
-                <div class="field">
-                    <label>Price ($)</label>
-                    <input id="f-price" type="number" placeholder="0.00" step="0.01" min="0"/>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🗄️</div>
+                <div class="skill-name">Database</div>
+                <div class="skill-tags">
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">MySQL</span>
+                    <span class="tag">MongoDB</span>
                 </div>
-                <div class="field">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-primary" onclick="submitForm()">
-                        <span id="btn-save-text">＋ Add</span>
-                    </button>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🚀</div>
+                <div class="skill-name">DevOps</div>
+                <div class="skill-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">Jenkins</span>
+                    <span class="tag">Ansible</span>
+                    <span class="tag">CI/CD</span>
                 </div>
-                <div class="field" id="cancel-wrap" style="display:none;">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🛠️</div>
+                <div class="skill-name">Tools</div>
+                <div class="skill-tags">
+                    <span class="tag">Git</span>
+                    <span class="tag">GitHub</span>
+                    <span class="tag">Maven</span>
+                    <span class="tag">Linux</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">☁️</div>
+                <div class="skill-name">Cloud &amp; Server</div>
+                <div class="skill-tags">
+                    <span class="tag">Nginx</span>
+                    <span class="tag">SSH</span>
+                    <span class="tag">DigitalOcean</span>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- TABLE CARD -->
-    <div class="card">
-        <div class="card-header">
-            <h2>All Products</h2>
-        </div>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="product-body">
-                    <tr><td colspan="5">
-                        <div class="empty-state">
-                            <div class="icon">⟳</div>
-                            <p>Loading products...</p>
-                        </div>
-                    </td></tr>
-                </tbody>
-            </table>
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="container">
+        <div class="section-label">What I've built</div>
+        <h2 class="section-heading">Projects</h2>
+        <p class="section-sub">A selection of real-world projects and academic work.</p>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-thumb">📦</div>
+                <div class="project-body">
+                    <div class="project-title">Product Manager — DevOps Midterm</div>
+                    <div class="project-desc">
+                        Full stack Spring Boot CRUD application with PostgreSQL, automated CI/CD pipeline
+                        via Jenkins, and Ansible deployment to a live server.
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <span class="project-tag">Spring Boot</span>
+                    <span class="project-tag">Jenkins</span>
+                    <span class="project-tag">Ansible</span>
+                    <span class="project-tag">Docker</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-thumb">🛒</div>
+                <div class="project-body">
+                    <div class="project-title">E-Commerce REST API</div>
+                    <div class="project-desc">
+                        RESTful API for an e-commerce platform with product catalog, user auth,
+                        and order management built with Spring Boot and PostgreSQL.
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <span class="project-tag">Java</span>
+                    <span class="project-tag">Spring Security</span>
+                    <span class="project-tag">PostgreSQL</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-thumb">🎨</div>
+                <div class="project-body">
+                    <div class="project-title">Portfolio Website</div>
+                    <div class="project-desc">
+                        Personal developer portfolio with responsive design, project showcase,
+                        and live product CRUD demo — deployed via automated pipeline.
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <span class="project-tag">HTML</span>
+                    <span class="project-tag">CSS</span>
+                    <span class="project-tag">Thymeleaf</span>
+                    <span class="project-tag">Nginx</span>
+                </div>
+            </div>
         </div>
     </div>
+</section>
 
-</div><!-- /page -->
+<!-- PRODUCT CRUD DEMO -->
+<section id="products-section">
+    <div class="container">
+        <div class="section-label">Live Demo</div>
+        <h2 class="section-heading">Product CRUD</h2>
+        <p class="section-sub">A real working demo connected to a PostgreSQL database.</p>
+
+        <!-- Form -->
+        <div class="card" id="form-card" style="margin-bottom:1.25rem;">
+            <div class="card-header">
+                <h3 id="form-title">Add New Product</h3>
+                <span class="edit-badge" id="edit-badge" style="display:none;">Editing</span>
+            </div>
+            <div class="card-body">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Name</label>
+                        <input id="f-name" type="text" placeholder="e.g. Laptop Pro"/>
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <input id="f-desc" type="text" placeholder="Short description"/>
+                    </div>
+                    <div class="field">
+                        <label>Price ($)</label>
+                        <input id="f-price" type="number" placeholder="0.00" step="0.01" min="0"/>
+                    </div>
+                    <div class="field">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-save" onclick="submitForm()">
+                            <span id="btn-save-text">＋ Add</span>
+                        </button>
+                    </div>
+                    <div class="field" id="cancel-wrap" style="display:none;">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-ghost-sm" onclick="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card">
+            <div class="card-header">
+                <h3>All Products</h3>
+                <span id="nav-count" style="font-size:0.8rem;color:var(--muted);font-weight:600;"></span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-body">
+                        <tr><td colspan="5">
+                            <div class="empty-state"><div class="eicon">⟳</div><p>Loading...</p></div>
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-heading">Contact</h2>
+        <p class="section-sub">Feel free to reach out for opportunities or collaboration.</p>
+        <div class="contact-grid">
+            <a class="contact-card" href="mailto:nairithrin143@gmail.com">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-info">
+                    <div class="c-label">Email</div>
+                    <div class="c-value">nairithrin143@gmail.com</div>
+                </div>
+            </a>
+            <a class="contact-card" href="https://github.com/RITH-1437" target="_blank">
+                <div class="contact-icon">🐙</div>
+                <div class="contact-info">
+                    <div class="c-label">GitHub</div>
+                    <div class="c-value">RITH-1437</div>
+                </div>
+            </a>
+            <a class="contact-card" href="https://linkedin.com/in/rin-nairith" target="_blank">
+                <div class="contact-icon">💼</div>
+                <div class="contact-info">
+                    <div class="c-label">LinkedIn</div>
+                    <div class="c-value">rin-nairith</div>
+                </div>
+            </a>
+            <a class="contact-card" href="#">
+                <div class="contact-icon">📍</div>
+                <div class="contact-info">
+                    <div class="c-label">Location</div>
+                    <div class="c-value">Phnom Penh, Cambodia</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>Designed &amp; built by <strong>Rin Nairith</strong> &mdash; Full Stack Developer &mdash; 2026</p>
+    <p style="margin-top:.4rem;font-size:.75rem;opacity:.6;">Deployed via Jenkins CI/CD · Spring Boot · Ansible</p>
+</footer>
 
 <div id="toast"></div>
 
@@ -327,83 +590,53 @@
             const data = await res.json();
             const tbody = document.getElementById('product-body');
             document.getElementById('nav-count').textContent =
-                data.length === 0 ? 'No items' : `${data.length} item${data.length > 1 ? 's' : ''}`;
+                data.length ? `${data.length} item${data.length > 1 ? 's' : ''}` : '';
 
             if (!data.length) {
                 tbody.innerHTML = `<tr><td colspan="5">
                     <div class="empty-state">
-                        <div class="icon">📦</div>
+                        <div class="eicon">📦</div>
                         <p>No products yet — add your first one above.</p>
                     </div></td></tr>`;
                 return;
             }
-
             tbody.innerHTML = data.map(p => `
                 <tr>
                     <td class="td-id">#${p.id}</td>
                     <td class="td-name">${esc(p.name)}</td>
                     <td class="td-desc" title="${esc(p.description)}">${esc(p.description) || '<span style="color:#cbd5e1">—</span>'}</td>
                     <td><span class="price-badge">$${p.price != null ? p.price.toFixed(2) : '0.00'}</span></td>
-                    <td>
-                        <div class="actions-cell">
-                            <button class="btn btn-icon btn-edit-sm"
-                                onclick="startEdit(${p.id}, ${JSON.stringify(p.name)}, ${JSON.stringify(p.description || '')}, ${p.price ?? 0})">
-                                Edit
-                            </button>
-                            <button class="btn btn-icon btn-del-sm"
-                                onclick="deleteProduct(${p.id})">
-                                Delete
-                            </button>
-                        </div>
-                    </td>
+                    <td><div class="actions-cell">
+                        <button class="btn btn-edit-sm" onclick="startEdit(${p.id},${JSON.stringify(p.name)},${JSON.stringify(p.description||'')},${p.price??0})">Edit</button>
+                        <button class="btn btn-del-sm"  onclick="deleteProduct(${p.id})">Delete</button>
+                    </div></td>
                 </tr>`).join('');
-        } catch(e) {
-            console.error(e);
-            toast('Failed to load products', 'error');
-        }
+        } catch(e) { toast('Failed to load products','error'); }
     }
 
     async function submitForm() {
-        const nameEl  = document.getElementById('f-name');
-        const name    = nameEl.value.trim();
-        const desc    = document.getElementById('f-desc').value.trim();
-        const priceRaw= document.getElementById('f-price').value;
-        const price   = priceRaw !== '' ? parseFloat(priceRaw) : null;
+        const nameEl = document.getElementById('f-name');
+        const name   = nameEl.value.trim();
+        const desc   = document.getElementById('f-desc').value.trim();
+        const priceV = document.getElementById('f-price').value;
+        const price  = priceV !== '' ? parseFloat(priceV) : null;
 
-        if (!name) {
-            nameEl.classList.add('error');
-            nameEl.focus();
-            toast('Product name is required', 'error');
-            return;
-        }
+        if (!name) { nameEl.classList.add('error'); nameEl.focus(); toast('Name is required','error'); return; }
         nameEl.classList.remove('error');
 
-        const body   = JSON.stringify({ name, description: desc, price });
         const url    = editingId ? `${API}/${editingId}` : API;
         const method = editingId ? 'PUT' : 'POST';
-
         try {
-            const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body });
-            if (res.ok) {
-                toast(editingId ? 'Product updated successfully' : 'Product added successfully', 'success');
-                cancelEdit();
-                loadProducts();
-            } else {
-                toast('Error saving product', 'error');
-            }
-        } catch(e) {
-            toast('Network error', 'error');
-        }
+            const res = await fetch(url, { method, headers:{'Content-Type':'application/json'}, body: JSON.stringify({name,description:desc,price}) });
+            if (res.ok) { toast(editingId ? 'Product updated ✓' : 'Product added ✓','success'); cancelEdit(); loadProducts(); }
+            else toast('Error saving product','error');
+        } catch(e) { toast('Network error','error'); }
     }
 
     async function deleteProduct(id) {
         if (!confirm(`Delete product #${id}?`)) return;
-        try {
-            const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
-            if (res.ok) { toast('Product deleted', 'success'); loadProducts(); }
-        } catch(e) {
-            toast('Network error', 'error');
-        }
+        const res = await fetch(`${API}/${id}`, {method:'DELETE'});
+        if (res.ok) { toast('Product deleted','success'); loadProducts(); }
     }
 
     function startEdit(id, name, description, price) {
@@ -411,20 +644,18 @@
         document.getElementById('f-name').value  = name;
         document.getElementById('f-desc').value  = description;
         document.getElementById('f-price').value = price;
-        document.getElementById('form-title').textContent = `Edit Product #${id}`;
+        document.getElementById('form-title').textContent    = `Edit Product #${id}`;
         document.getElementById('btn-save-text').textContent = '✓ Save Changes';
         document.getElementById('cancel-wrap').style.display = '';
         document.getElementById('edit-badge').style.display  = '';
         document.getElementById('form-card').classList.add('editing');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: document.getElementById('products-section').offsetTop - 70, behavior:'smooth'});
         document.getElementById('f-name').focus();
     }
 
     function cancelEdit() {
         editingId = null;
-        document.getElementById('f-name').value  = '';
-        document.getElementById('f-desc').value  = '';
-        document.getElementById('f-price').value = '';
+        ['f-name','f-desc','f-price'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('form-title').textContent    = 'Add New Product';
         document.getElementById('btn-save-text').textContent = '＋ Add';
         document.getElementById('cancel-wrap').style.display = 'none';
@@ -435,17 +666,14 @@
 
     function esc(str) {
         if (!str) return '';
-        return String(str)
-            .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-            .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
 
     let toastTimer;
-    function toast(msg, type = 'success') {
+    function toast(msg, type='success') {
         const t = document.getElementById('toast');
-        t.className = '';
-        t.textContent = msg;
-        void t.offsetWidth; // reflow
+        t.className = ''; t.textContent = msg;
+        void t.offsetWidth;
         t.classList.add('show', type);
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
